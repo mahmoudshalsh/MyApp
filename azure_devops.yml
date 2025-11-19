@@ -1,0 +1,50 @@
+trigger:
+  branches:
+    include:
+      - main
+variables:
+- name: BuildConfiguration
+  value: 'Release'
+- name: projectsToDeploy
+  value: '**/*.csproj'
+name: $(Date:yyyyMMdd)$(Rev:.r)
+stages:
+- stage: CI
+  displayName: 'CI'
+  pool:
+    name: Default
+  jobs:
+  - job: Build
+    displayName: 'Restore, Build and Publish'
+    steps:
+    - checkout: self
+      clean: true
+      persistCredentials: true
+    - task: DotNetCoreCLI@2
+      displayName: 'Restore'
+      inputs:
+        command: 'restore'
+        projects: '**/*.sln'
+        #projects: '$(projectsToDeploy)'
+        #feedsToUse: 'config'
+        #nugetConfigPath: 'nuget.config'
+    - task: DotNetCoreCLI@2
+      displayName: 'Build'
+      inputs:
+        command: 'build'
+        projects: '**/*.sln'
+        #projects: '$(projectsToDeploy)'
+        #feedsToUse: 'config'
+        #nugetConfigPath: 'nuget.config'
+    - task: DotNetCoreCLI@2
+      displayName: 'Publish'
+      inputs:
+        command: 'publish'
+        publishWebProjects: true
+        projects: '**/*.sln'
+        #projects: '$(projectsToDeploy)'
+        arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory) --no-restore'
+    - task: PublishBuildArtifacts@1
+      inputs:
+        pathToPublish: '$(Build.ArtifactStagingDirectory)'
+        artifactName: 'drop'
