@@ -10,9 +10,9 @@ using System.Runtime.CompilerServices;
 var builder = WebApplication.CreateBuilder(args);
 
 // Logger Configuration
-builder.Logging.ClearProviders();
-Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
-builder.Logging.AddSerilog(Log.Logger);
+//builder.Logging.ClearProviders();
+//Log.Logger = new LoggerConfiguration().WriteTo.Console().CreateLogger();
+//builder.Logging.AddSerilog(Log.Logger);
 
 //builder.Host.UseSerilog();
 
