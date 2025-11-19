@@ -37,6 +37,20 @@ public class CategoryController : ControllerBase
     {
         await _unitOfWork.Repository<Category>().AddAsync(category);
         await _unitOfWork.SaveAsync();
-        return CreatedAtAction(nameof(Create), new { id = category.Id }, category);
+        return CreatedAtAction(nameof(Create), new { id = category.CategoryID }, category);
+    }
+
+    [HttpGet("SalesByCategory")]
+    public async Task<IActionResult> GetAllSalesByCategory([FromQuery]string categoryName)
+    {
+        var salesCategories = await _categoryRepository.GetAllSalesByCategory(categoryName);
+        return Ok(salesCategories);
+    }
+
+    [HttpGet("Today")]
+    public async Task<IActionResult> GetToday()
+    {
+        var today = await _categoryRepository.GetToday();
+        return Ok(today?.Date);
     }
 }

@@ -1,6 +1,6 @@
-﻿using MyApp.ApplicationServices.Dtos;
+﻿using MyApp.Domain.Dtos;
 
-namespace MyApp.ApplicationServices.Interfaces;
+namespace MyApp.Domain.Interfaces;
 
 public interface IProductService
 {

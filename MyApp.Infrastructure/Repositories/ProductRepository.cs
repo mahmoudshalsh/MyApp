@@ -14,7 +14,7 @@ public class ProductRepository(AppDbContext appDbContext) : GenericRepository<Pr
     public async Task<IEnumerable<Product>> GetProductsByPriceRangeAsync(decimal minPrice, decimal maxPrice)
     {
         return await _dbSet
-            .Where(p => p.Price >= minPrice && p.Price <= maxPrice)
+            .Where(p => p.UnitPrice >= minPrice && p.UnitPrice <= maxPrice)
             .ToListAsync();
     }
 
@@ -31,7 +31,24 @@ public class ProductRepository(AppDbContext appDbContext) : GenericRepository<Pr
 
     public override async Task<IEnumerable<Product>> GetAllAsync()
     {
-        DbConnection connection = (SqlConnection)_context.Database.GetDbConnection();
-        return await connection.QueryAsync<Product>("SELECT * FROM Products");
+        using DbConnection connection = (SqlConnection)_context.Database.GetDbConnection();
+        var sql = @"SELECT ProductID, ProductName, UnitPrice, p.CategoryID, CategoryName
+                    FROM Products p 
+                    INNER JOIN Categories c ON p.CategoryID = c.CategoryID";
+
+        return await connection.QueryAsync<Product, Category, Product>(sql, (product, category) => {
+            product.Category = category;
+            return product;
+        },
+        splitOn: "CategoryID");
+    }
+
+    public async Task<IEnumerable<Product>> GetAllProductsAsync()
+    {
+        using DbConnection connection = (SqlConnection)_context.Database.GetDbConnection();
+        var sql = @"SELECT *
+                    FROM Products";
+
+        return await connection.QueryAsync<Product>(sql);
     }
 }

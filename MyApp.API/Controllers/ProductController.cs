@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using MyApp.ApplicationServices.Dtos;
-using MyApp.ApplicationServices.Interfaces;
+using MyApp.Domain.Dtos;
+using MyApp.Domain.Interfaces;
 
 namespace MyApp.API.Controllers;
 

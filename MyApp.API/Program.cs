@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using MyApp.ApplicationServices.Services;
+using MyApp.Domain.Services;
 using MyApp.Domain.Interfaces;
 using MyApp.Domain.Interfaces.Repositories;
 using MyApp.Infrastructure;
@@ -17,20 +17,20 @@ builder.Logging.AddSerilog(Log.Logger);
 //builder.Host.UseSerilog();
 
 // Add DbContext
-if (builder.Environment.IsDevelopment())
-{
-    builder.Services.AddDbContext<AppDbContext>(options =>
-        options.UseInMemoryDatabase("MyAppDb"));
-    builder.Services.AddDbContext<ControlDbContext>(options =>
-        options.UseInMemoryDatabase("ControlDb"));
-}
-else
-{
+//if (builder.Environment.IsDevelopment())
+//{
+//    builder.Services.AddDbContext<AppDbContext>(options =>
+//        options.UseInMemoryDatabase("MyAppDb"));
+//    builder.Services.AddDbContext<ControlDbContext>(options =>
+//        options.UseInMemoryDatabase("ControlDb"));
+//}
+//else
+//{
     builder.Services.AddDbContext<AppDbContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("MyAppDbConnection")));
     builder.Services.AddDbContext<ControlDbContext>(options =>
         options.UseSqlServer(builder.Configuration.GetConnectionString("ControlDbConnection")));
-}
+//}
 
 // Register UnitOfWork
 builder.Services.AddScoped<IAppUnitOfWork>(provider => provider.GetRequiredService<AppDbContext>());

@@ -8,9 +8,9 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
     public void Configure(Microsoft.EntityFrameworkCore.Metadata.Builders.EntityTypeBuilder<Product> builder)
     {
         builder.ToTable("Products");
-        builder.HasKey(p => p.Id);
-        builder.Property(p => p.Name).IsRequired().HasMaxLength(100);
-        builder.Property(p => p.Price).HasColumnType("decimal(18,2)");
-        builder.HasOne(p => p.Category).WithMany(c => c.Products).HasForeignKey(p => p.CategoryId);
+        builder.HasKey(p => p.ProductID);
+        builder.Property(p => p.ProductName).IsRequired().HasMaxLength(40);
+        builder.Property(p => p.UnitPrice).HasColumnType("money");
+        builder.HasOne(p => p.Category).WithMany(c => c.Products).HasForeignKey(p => p.CategoryID);
     }
 }

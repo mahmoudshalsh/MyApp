@@ -1,4 +1,4 @@
-@MyApp.API_HostAddress = http://localhost:5234
+@MyApp.API_HostAddress = https://localhost:7001
 
 POST {{MyApp.API_HostAddress}}/api/category
 Content-Type: application/json
@@ -38,8 +38,13 @@ GET {{MyApp.API_HostAddress}}/api/category/All
 
 ###
 
-
 GET {{MyApp.API_HostAddress}}/api/product/All
 
 ###
 
+@categoryName = Beverages
+GET {{MyApp.API_HostAddress}}/api/category/SalesByCategory?categoryName={{categoryName}}
+
+###
+
+GET {{MyApp.API_HostAddress}}/api/category/Today
