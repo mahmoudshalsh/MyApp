@@ -1,6 +1,45 @@
 @MyApp.API_HostAddress = http://localhost:5234
 
-GET {{MyApp.API_HostAddress}}/weatherforecast/
-Accept: application/json
+POST {{MyApp.API_HostAddress}}/api/category
+Content-Type: application/json
+
+{
+    "Id": 1,
+    "Name": "Drinks"
+}
 
 ###
+
+POST {{MyApp.API_HostAddress}}/api/Product
+Content-Type: application/json
+
+{
+    "Id": 1,
+    "Name": "Milk",
+    "Price": 1.99,
+    "CategoryId": 1
+}
+
+###
+
+POST {{MyApp.API_HostAddress}}/api/Product
+Content-Type: application/json
+
+{
+    "Id": 2,
+    "Name": "Coffee",
+    "Price": 4.99,
+    "CategoryId": 1
+}
+
+###
+
+GET {{MyApp.API_HostAddress}}/api/category/All
+
+###
+
+
+GET {{MyApp.API_HostAddress}}/api/product/All
+
+###
+

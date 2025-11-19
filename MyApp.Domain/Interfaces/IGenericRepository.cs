@@ -10,6 +10,5 @@ namespace MyApp.Domain.Interfaces
         Task AddAsync(T entity);
         void Update(T entity);
         void Remove(T entity);
-        Task<int> SaveChangesAsync();
     }
 }
